@@ -50,20 +50,80 @@
     #   org.gradle.daemon.idletimeout=3600000
     # '';
   };
-  ####################################
+####################################
   # @neovim
   ####################################
   programs.neovim = {
     enable = true;
     defaultEditor = true;
-    plugins = with pkgs.vimPlugins; [
-      nvim-tree-lua          # file explorer
-      telescope-nvim         # Fuzzy finder
-      plenary-nvim           # required by telescope
-      nvim-autopairs         # autocomlete for closing braces etc..
+    viAlias = true;
+    vimAlias = true;
+    
+    extraPackages = with pkgs; [
+      ripgrep
+      gopls
+      pyright
+      nixd
     ];
+    
+    plugins = with pkgs.vimPlugins; [
+      nvim-tree-lua
+      telescope-nvim
+      plenary-nvim
+      nvim-autopairs
+      nvim-web-devicons
+      gruvbox-nvim
+      nvim-cmp
+      cmp-nvim-lsp
+    ];
+    
+    extraLuaConfig = ''
+      -- Leader key
+      vim.g.mapleader = ' '
+      
+      -- Basic settings
+      vim.opt.number = true
+      vim.opt.relativenumber = true
+      
+      -- Theme
+      vim.o.background = "dark"
+      vim.cmd('colorscheme gruvbox')
+      
+      -- Setup plugins
+      require("nvim-tree").setup()
+      require('nvim-autopairs').setup()
+      
+      -- LSP
+      local capabilities = require('cmp_nvim_lsp').default_capabilities()
+      
+      vim.lsp.config('gopls', { capabilities = capabilities })
+      vim.lsp.config('pyright', { capabilities = capabilities })
+      vim.lsp.config('nixd', { capabilities = capabilities })
+      
+      vim.lsp.enable({ 'gopls', 'pyright', 'nixd' })
+      
+      vim.keymap.set('n', 'gd', vim.lsp.buf.definition)
+      vim.keymap.set('n', 'K', vim.lsp.buf.hover)
+      
+      -- Completion
+      local cmp = require('cmp')
+      cmp.setup({
+        mapping = cmp.mapping.preset.insert({
+          ['<CR>'] = cmp.mapping.confirm({ select = true }),
+        }),
+        sources = {
+          { name = 'nvim_lsp' },
+        }
+      })
+      
+      -- Keybinds
+      vim.keymap.set('n', '<leader>e', ':NvimTreeToggle<CR>')
+      
+      local builtin = require('telescope.builtin')
+      vim.keymap.set('n', '<leader>ff', builtin.find_files)
+      vim.keymap.set('n', '<leader>fg', builtin.live_grep)
+    '';
   };
-
   ####################################
   # @waybar
   ####################################
@@ -129,15 +189,18 @@
   ####################################
   # @git
   ####################################
-    programs.git = {
-      enable = true;
-      userName = "d0ntay";
-      userEmail = "d0ntay@d0ntay.com";
-      extraConfig = {
-	init.defaultBranch = "main";
+  programs.git = {
+    enable = true;
+    settings = {
+      user = {
+        name = "d0ntay";
+        email = "d0ntay@d0ntay.com";
       };
+      init = {
+        defaultBranch = "main";
+      }; 
     };
-
+  };
   home.sessionVariables = {
     EDITOR = "nvim";
   };
