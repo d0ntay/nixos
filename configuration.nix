@@ -151,6 +151,7 @@ in
     firefox       		
     discord
     rofi          		# menu
+    gimp			# FOSS picture editing
     hyprpaper     		# wallpaper for hyprland
     btop          		# task manager thingy
     bibata-cursors              # cursor theme
@@ -165,7 +166,6 @@ in
     blueman                     # for bluetooth
     pavucontrol                 # for sound and volume
     playerctl                   # media player service
-    papirus-icon-theme          # icon theme
     nvtopPackages.full          # gpu monitor like btop
   ];
   
@@ -206,8 +206,8 @@ in
   environment.variables = {
     XCURSOR_THEME = "Bibata-Modern-Classic";
     XCURSOR_SIZE = "24";
-
-    ICON_THEME = "Papirus-Dark";
+    
+    GTK_THEME = "Adwaita-dark";  
   };
   
   ############################
