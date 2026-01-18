@@ -50,6 +50,14 @@
     #   org.gradle.daemon.idletimeout=3600000
     # '';
   };
+  ####################################
+  # @waybar
+  ####################################
+  programs.waybar = {
+    enable = true;
+    settings = builtins.fromJSON (builtins.readFile ./.config/waybar/config);
+    style = builtins.readFile ./.config/waybar/style.css;
+  };
 
   ####################################
   # @kitty
