@@ -51,14 +51,29 @@
     # '';
   };
   ####################################
+  # @neovim
+  ####################################
+  programs.neovim = {
+    enable = true;
+    defaultEditor = true;
+    plugins = with pkgs.vimPlugins; [
+      nvim-tree-lua          # file explorer
+      telescope-nvim         # Fuzzy finder
+      plenary-nvim           # required by telescope
+      nvim-autopairs         # autocomlete for closing braces etc..
+    ];
+  };
+
+  ####################################
   # @waybar
   ####################################
   programs.waybar = {
     enable = true;
-    settings = builtins.fromJSON (builtins.readFile ./.config/waybar/config);
+    settings = {
+      mainBar = builtins.fromJSON (builtins.readFile ./.config/waybar/config);
+    };
     style = builtins.readFile ./.config/waybar/style.css;
-  };
-
+  };  
   ####################################
   # @kitty
   ####################################
@@ -124,7 +139,7 @@
     };
 
   home.sessionVariables = {
-    # EDITOR = "emacs";
+    EDITOR = "nvim";
   };
 
   # Let Home Manager install and manage itself.

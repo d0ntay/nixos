@@ -114,11 +114,6 @@ in
   };
   
   ############################
-  # Waybar
-  ############################
-  programs.waybar.enable = true;
-  
-  ############################
   # Services for GUI controls
   ############################
   hardware.bluetooth.enable = true;
@@ -145,7 +140,6 @@ in
   environment.systemPackages = with pkgs; [
     vim           		# backup text editor
     git
-    neovim        		# text editor
     wget          
     neofetch      		# fetching tool
     firefox       		

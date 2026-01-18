@@ -17,7 +17,7 @@
     "all-outputs": true
   },
   "clock": {
-    "format": "{:%a  %m-%d-%Y  %I:%M %p}",
+    "format": "{:%a  %m-%d-%Y  %I:%M %p}"
   },
 
   "cpu": {
