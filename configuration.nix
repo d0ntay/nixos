@@ -133,7 +133,6 @@ in
   ############################
   services.printing.enable = true;
   
-  
   ############################
   # Packages
   ############################
@@ -146,6 +145,7 @@ in
     discord
     rofi          		# menu
     gimp			# FOSS picture editing
+    feh				# picture viewer
     hyprpaper     		# wallpaper for hyprland
     btop          		# task manager thingy
     bibata-cursors              # cursor theme
@@ -161,6 +161,9 @@ in
     pavucontrol                 # for sound and volume
     playerctl                   # media player service
     nvtopPackages.full          # gpu monitor like btop
+    libnotify			# notification daemon
+    swaynotificationcenter	# notifications
+    wlr-randr
   ];
   
   ############################
