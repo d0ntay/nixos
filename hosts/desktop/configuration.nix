@@ -171,7 +171,6 @@ in
   ############################
   users.users.d0ntay = {
     isNormalUser = true;
-    description = "Dante";
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.zsh;
   };
@@ -194,7 +193,7 @@ in
   ############################
   # Networking
   ############################
-  networking.hostName = "nixos";
+  networking.hostName = "nixos-d";
   networking.networkmanager.enable = true;
   
   ############################
