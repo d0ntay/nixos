@@ -141,7 +141,6 @@ in
     git
     wget          
     neofetch      		# fetching tool
-    firefox       		
     discord
     rofi          		# menu
     gimp			# FOSS picture editing
@@ -164,6 +163,7 @@ in
     libnotify			# notification daemon
     swaynotificationcenter	# notifications
     wlr-randr
+    librewolf			# FOSS web browser
   ];
   
   ############################
