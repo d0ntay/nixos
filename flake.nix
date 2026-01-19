@@ -7,35 +7,33 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }:
+  outputs = { self, nixpkgs, home-manager, ... }@inputs:
     let
       system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
     in {
       nixosConfigurations = {
-        # desktop
+        # Desktop
         nixos-d = nixpkgs.lib.nixosSystem {
           inherit system;
+          specialArgs = { inherit inputs; };
           modules = [ ./hosts/desktop/configuration.nix ];
         };
 
-        # laptop
+        # Laptop
         nixos-l = nixpkgs.lib.nixosSystem {
           inherit system;
+          specialArgs = { inherit inputs; }; 
           modules = [ ./hosts/laptop/configuration.nix ];
         };
       };
 
       homeConfigurations = {
-	# desktop
         "d0ntay@nixos-d" = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
+          pkgs = nixpkgs.legacyPackages.${system};
           modules = [ ./hosts/desktop/home.nix ];
         };
-
-	# laptop
         "d0ntay@nixos-l" = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
+          pkgs = nixpkgs.legacyPackages.${system};
           modules = [ ./hosts/laptop/home.nix ];
         };
       };
