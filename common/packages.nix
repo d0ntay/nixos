@@ -4,6 +4,7 @@
 
   environment.systemPackages = with pkgs; [
     vim           		# backup text editor
+    kitty
     git
     wget          
     neofetch      		# fetching tool
@@ -31,5 +32,8 @@
     wlr-randr
     librewolf			# FOSS web browser
   ];
-
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true; 
+  };
 }
