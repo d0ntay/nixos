@@ -3,19 +3,25 @@
   "position": "top",
   "output" : "eDP-1",
 
-  "modules-left": ["custom/nix", "hyprland/workspaces", "cpu", "memory"],
+  "modules-left": ["custom/nix", "hyprland/workspaces", "cpu", "memory", "battery"],
   "modules-center": [],
   "modules-right": ["tray","clock"],
-
-   "custom/nix": {
+  
+  "battery": {
+      "format": "{capacity}% {icon}",
+      "format-icons": ["", "", "", "", ""]
+  },
+  
+  "custom/nix": {
        "format": "  ",
        "tooltip": false
    },
-
+  
   "hyprland/workspaces": {
     "disable-scroll": true,
     "all-outputs": true
   },
+  
   "clock": {
     "format": "{:%a  %m-%d-%Y  %I:%M %p}"
   },

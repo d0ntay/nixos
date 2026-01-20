@@ -70,3 +70,9 @@ window#waybar {
     min-height: 16px;
     margin: 4px 8px;
    }
+#battery {
+  color: #98971a;
+  margin: 4px;
+  padding: 0px 16px;
+  transition: all 0.3s ease;
+}
