@@ -5,17 +5,59 @@
     ./users.nix
     ./packages.nix
   ];
+  ############################
+  # Time & Locale
+  ############################
+  time.timeZone = "America/New_York";
+  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.extraLocaleSettings = {
+    LC_ALL = "en_US.UTF-8";
+  };
 
-  # Bootloader settings (if both machines use systemd-boot)
+  ############################
+  # Boot
+  ############################
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  time.timeZone = "America/New_York";   # Set your time zone.
+  ############################
+  # Networking
+  ############################
+  networking.networkmanager.enable = true;
+  
+  ############################
+  # ENV variables
+  ############################
+  environment.variables = {
+    XCURSOR_THEME = "Bibata-Modern-Classic";
+    XCURSOR_SIZE = "24";
+    
+    GTK_THEME = "Adwaita-dark";  
+  };
+  
+  ############################
+  # Fonts
+  ############################
+  fonts.packages = with pkgs; [
+    font-awesome
+    nerd-fonts.jetbrains-mono
+  ];
 
-  i18n.defaultLocale = "en_US.UTF-8";   # Select internationalisation properties.
+  ############################
+  # Shell
+  ############################
+  programs.zsh.enable = true;
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];   # Enable Flakes and the 'nix' command
 
-  networking.networkmanager.enable = true;   # Networking
+  ############################
+  # Settings for nix
+  ############################
   nixpkgs.config.allowUnfree = true;
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  
+  ############################
+  # System version
+  ############################
+  system.stateVersion = "25.11";
 }
+
