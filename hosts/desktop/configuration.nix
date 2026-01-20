@@ -74,18 +74,6 @@ in
   nixpkgs.config.allowUnfree = true;
   
   ############################
-  # Hyprland
-  ############################
-  programs.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-  };
-  xdg.portal = {
-    enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
-  };
- 
-  ############################
   # Steam
   ############################
   programs.steam.enable = true;
@@ -128,105 +116,18 @@ in
     alsa.support32Bit = true;
     pulse.enable = true;
   };
-  ############################
-  # Printing
-  ############################
-  services.printing.enable = true;
   
   ############################
   # Packages
   ############################
   environment.systemPackages = with pkgs; [
-    vim           		# backup text editor
-    git
-    wget          
-    neofetch      		# fetching tool
-    discord
-    rofi          		# menu
-    gimp			# FOSS picture editing
-    feh				# picture viewer
-    hyprpaper     		# wallpaper for hyprland
-    btop          		# task manager thingy
-    bibata-cursors              # cursor theme
     mangohud			# system monitor for gaming (fps,temps,etc)
     protonup-ng                 # linux gaming on steam sort of like wine
-    xfce.thunar                 # file manager
-    grim                        # screenshot
-    slurp			# selected section screenshot
-    hyprlock			# lock screen app for hyprland
-    hypridle			# idle thing for hyprland
-    networkmanagerapplet        # for network and wifi
-    blueman                     # for bluetooth
-    pavucontrol                 # for sound and volume
-    playerctl                   # media player service
     nvtopPackages.full          # gpu monitor like btop
-    libnotify			# notification daemon
-    swaynotificationcenter	# notifications
-    wlr-randr
-    librewolf			# FOSS web browser
   ];
   
-  ############################
-  # User
-  ############################
-  users.users.d0ntay = {
-    isNormalUser = true;
-    extraGroups = [ "networkmanager" "wheel" ];
-    shell = pkgs.zsh;
-  };
-  
-  ############################
-  # Time & Locale
-  ############################
-  time.timeZone = "America/New_York";
-  i18n.defaultLocale = "en_US.UTF-8";
-  i18n.extraLocaleSettings = {
-    LC_ALL = "en_US.UTF-8";
-  };
-
-  ############################
-  # Boot
-  ############################
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
   ############################
   # Networking
   ############################
   networking.hostName = "nixos-d";
-  networking.networkmanager.enable = true;
-  
-  ############################
-  # ENV variables
-  ############################
-  environment.variables = {
-    XCURSOR_THEME = "Bibata-Modern-Classic";
-    XCURSOR_SIZE = "24";
-    
-    GTK_THEME = "Adwaita-dark";  
-  };
-  
-  ############################
-  # Fonts
-  ############################
-  fonts.packages = with pkgs; [
-    font-awesome
-    nerd-fonts.jetbrains-mono
-  ];
-
-  ############################
-  # Shell
-  ############################
-  programs.zsh.enable = true;
-
-
-  ############################
-  # Settings for nix
-  ############################
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  
-  ############################
-  # System version
-  ############################
-  system.stateVersion = "25.11";
 }
