@@ -19,11 +19,10 @@ window#waybar {
 }
 
 #workspaces button {
-  padding: 0px 12px;
+  padding: 0px 5px;
   color: #ebdbb2;
   background: transparent;
   margin: 4px 2px;
-  transition: all 0.3s ease;
 }
 
 #workspaces button.active {
@@ -34,45 +33,51 @@ window#waybar {
 #cpu {
   color: #98971a;
   margin: 4px;
-  padding: 0px 16px;
-  transition: all 0.3s ease;
+  padding: 0px 5px;
 }
 
 /* Memory */
 #memory {
   color: #98971a;
   margin: 4px 4px;
-  padding: 0px 16px;
-  transition: all 0.3s ease;
+  padding: 0px 5px;
 }
 
 /* System Tray */
 #tray {
   margin: 4px 4px;
-  padding: 0px 12px;
+  padding: 0px 5px;
 }
 
 /* Clock */
 #clock {
   color: #98971a;
   margin: 4px 4px;
-  padding: 0px 16px;
-  transition: all 0.3s ease;
+  padding: 0px 5px;
 }
 
-/*  custom/nix */
-  #custom-nix {
+#custom-nix {
     background-image: url("/home/d0ntay/Pictures/NixOS.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    min-width: 16px;  
-    min-height: 16px;
-    margin: 4px 8px;
+    
+    margin: 4px;
    }
 #battery {
   color: #98971a;
   margin: 4px;
-  padding: 0px 16px;
-  transition: all 0.3s ease;
+  padding: 0px 5px;
+}
+
+#custom-power {
+  color: #98971a;
+  margin: 4px;
+  padding: 5px;
+}
+
+menu {
+    background: rgba(40, 40, 40, .75);
+    color: #ebdbb2;
+}
+
+menuitem {
+    border-radius: 15px;
 }
