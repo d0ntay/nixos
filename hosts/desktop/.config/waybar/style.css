@@ -1,0 +1,81 @@
+* {
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: 14px;
+  font-weight: bold;
+  border: none;
+  border-radius: 0;
+  min-height: 0;
+}
+
+window#waybar {
+  background: rgba(40, 40, 40, .75);
+}
+
+/* Workspaces */
+#workspaces {
+  background: transparent;
+  margin: 0px 8px;
+  padding: 0px 8px;
+}
+
+#workspaces button {
+  padding: 0px 5px;
+  color: #ebdbb2;
+  background: transparent;
+  margin: 4px 2px;
+}
+
+#workspaces button.active {
+  background: #458588;
+}
+
+/* CPU */
+#cpu {
+  color: #98971a;
+  margin: 4px;
+  padding: 0px 5px;
+}
+
+/* Memory */
+#memory {
+  color: #98971a;
+  margin: 4px 4px;
+  padding: 0px 5px;
+}
+
+/* System Tray */
+#tray {
+  margin: 4px 4px;
+  padding: 0px 5px;
+}
+
+/* Clock */
+#clock {
+  color: #98971a;
+  margin: 4px 4px;
+  padding: 0px 5px;
+}
+
+#custom-nix {
+  background-image: url("/home/d0ntay/Pictures/NixOS.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  margin: 4px;
+  padding: 5px;
+}
+
+#custom-power {
+  color: #98971a;
+  margin: 4px;
+  padding: 5px;
+}
+
+menu {
+    background: rgba(40, 40, 40, .75);
+    color: #ebdbb2;
+}
+
+menuitem {
+    border-radius: 15px;
+}

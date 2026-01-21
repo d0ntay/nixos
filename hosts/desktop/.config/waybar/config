@@ -1,0 +1,49 @@
+{
+  "layer": "top",
+  "position": "top",
+  "output": "DP-1",
+
+  "modules-left": ["custom/nix", "hyprland/workspaces", "cpu", "memory"],
+  "modules-center": [],
+  "modules-right": ["tray", "clock", "custom/power"],
+
+  "custom/power": {
+    "format": "⏻ ",
+    "tooltip": false,
+    "menu": "on-click",
+    "menu-file": "/home/d0ntay/.dotfiles/hosts/laptop/.config/waybar/power_menu.xml",
+    "menu-actions": {
+      "shutdown": "shutdown",
+      "reboot": "reboot",
+      "suspend": "systemctl suspend",
+      "hibernate": "systemctl hibernate"
+    }
+  },
+
+  "custom/nix": {
+    "format": "  ",
+    "tooltip": false
+  },
+
+  "hyprland/workspaces": {
+    "disable-scroll": true,
+    "all-outputs": true
+  },
+
+  "clock": {
+    "format": "{:%a  %m-%d-%Y  %I:%M %p}"
+  },
+
+  "cpu": {
+    "format": "  {usage}%"
+  },
+
+  "memory": {
+    "format": "  {used}MB"
+  },
+
+  "tray": {
+    "spacing": 10
+  }
+}
+
