@@ -31,6 +31,9 @@
     swaynotificationcenter	# notifications
     wlr-randr
     librewolf			# FOSS web browser
+    python314
+    go
+    gcc
   ];
   services.xserver.excludePackages = with pkgs; [
     xterm
