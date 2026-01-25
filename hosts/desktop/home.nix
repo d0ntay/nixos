@@ -61,80 +61,110 @@
       positionY = "bottom";
     };
   };
-  ####################################
-  # @neovim
-  ####################################
-  programs.neovim = {
-    enable = true;
-    defaultEditor = true;
-    viAlias = true;
-    vimAlias = true;
-    
-    extraPackages = with pkgs; [
-      ripgrep
-      gopls
-      pyright
-      nixd
-    ];
-    
-    plugins = with pkgs.vimPlugins; [
-      nvim-tree-lua
-      telescope-nvim
-      plenary-nvim
-      nvim-autopairs
-      nvim-web-devicons
-      gruvbox-nvim
-      nvim-cmp
-      cmp-nvim-lsp
-    ];
-    
-    extraLuaConfig = ''
-      -- Leader key
-      vim.g.mapleader = ' '
-      
-      -- Basic settings
-      vim.opt.number = true
-      vim.opt.relativenumber = true
-      
-      -- Theme
-      vim.o.background = "dark"
-      vim.cmd('colorscheme gruvbox')
-      
-      -- Setup plugins
-      require("nvim-tree").setup()
-      require('nvim-autopairs').setup()
-      
-      -- LSP
-      local capabilities = require('cmp_nvim_lsp').default_capabilities()
-      
-      vim.lsp.config('gopls', { capabilities = capabilities })
-      vim.lsp.config('pyright', { capabilities = capabilities })
-      vim.lsp.config('nixd', { capabilities = capabilities })
-      
-      vim.lsp.enable({ 'gopls', 'pyright', 'nixd' })
-      
-      vim.keymap.set('n', 'gd', vim.lsp.buf.definition)
-      vim.keymap.set('n', 'K', vim.lsp.buf.hover)
-      
-      -- Completion
-      local cmp = require('cmp')
-      cmp.setup({
-        mapping = cmp.mapping.preset.insert({
-          ['<CR>'] = cmp.mapping.confirm({ select = true }),
-        }),
-        sources = {
-          { name = 'nvim_lsp' },
-        }
-      })
-      
-      -- Keybinds
-      vim.keymap.set('n', '<leader>e', ':NvimTreeToggle<CR>')
-      
-      local builtin = require('telescope.builtin')
-      vim.keymap.set('n', '<leader>ff', builtin.find_files)
-      vim.keymap.set('n', '<leader>fg', builtin.live_grep)
-    '';
-  };
+####################################
+# @neovim
+####################################
+programs.neovim = {
+  enable = true;
+  defaultEditor = true;
+  viAlias = true;
+  vimAlias = true;
+
+  # Language servers & tools
+  extraPackages = with pkgs; [
+    ripgrep
+    gopls
+    pyright
+    nixd
+  ];
+
+  plugins = with pkgs.vimPlugins; [
+    # Core
+    nvim-lspconfig
+
+    # UI / Utils
+    nvim-tree-lua
+    nvim-web-devicons
+    telescope-nvim
+    plenary-nvim
+    gruvbox-nvim
+    nvim-autopairs
+
+    # Completion
+    nvim-cmp
+    cmp-nvim-lsp
+    cmp-buffer
+  ];
+
+  extraLuaConfig = ''
+    --------------------------------------------------
+    -- Basics
+    --------------------------------------------------
+    vim.g.mapleader = ' '
+    vim.opt.number = true
+    vim.opt.relativenumber = true
+    vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
+
+    --------------------------------------------------
+    -- Theme
+    --------------------------------------------------
+    vim.o.background = "dark"
+    vim.cmd.colorscheme("gruvbox")
+
+    --------------------------------------------------
+    -- Plugins
+    --------------------------------------------------
+    require("nvim-tree").setup()
+    require("nvim-autopairs").setup()
+
+    --------------------------------------------------
+    -- LSP
+    --------------------------------------------------
+    local lspconfig = require('lspconfig')
+    local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+    lspconfig.gopls.setup({
+      capabilities = capabilities,
+    })
+
+    lspconfig.pyright.setup({
+      capabilities = capabilities,
+    })
+
+    lspconfig.nixd.setup({
+      capabilities = capabilities,
+    })
+
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover)
+
+    --------------------------------------------------
+    -- Completion (nvim-cmp)
+    --------------------------------------------------
+    local cmp = require('cmp')
+
+    cmp.setup({
+      mapping = cmp.mapping.preset.insert({
+        ['<C-Space>'] = cmp.mapping.complete(),
+        ['<CR>'] = cmp.mapping.confirm({ select = true }),
+      }),
+      sources = {
+        { name = 'nvim_lsp' },
+        { name = 'buffer' },
+      },
+    })
+
+    --------------------------------------------------
+    -- Keybinds
+    --------------------------------------------------
+    vim.keymap.set('n', '<leader>e', ':NvimTreeToggle<CR>')
+
+    local builtin = require('telescope.builtin')
+    vim.keymap.set('n', '<leader>ff', builtin.find_files)
+    vim.keymap.set('n', '<leader>fg', builtin.live_grep)
+  '';
+};
+
   ####################################
   # @waybar
   ####################################
@@ -154,7 +184,6 @@
     settings = {
       font_family = "JetBrainsMono Nerd Font";
       font_size = 12;
-
       background_opacity = "0.95";
       enable_audio_bell = false;
       confirm_os_window_close = 0;
@@ -176,7 +205,7 @@
     enable = true;
     settings = {
       add_newline = true;
-      format = "$username$hostname$directory$character";
+      format = "$git_branch$git_commit$git_state$git_status\n$username$hostname$directory$character";
       username = {
         show_always = true;
 	format = "[$user]($style)";

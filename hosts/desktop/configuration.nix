@@ -101,6 +101,18 @@ in
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";
     GBM_BACKEND = "nvidia-drm";
   };
+   services.xserver = {
+    enable = true;
+
+    libinput = {
+      enable = true;
+
+      mouse = {
+        accelProfile = "flat";
+      };
+    };
+
+  };
   
   ############################
   # Services for GUI controls

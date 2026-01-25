@@ -32,6 +32,9 @@
     wlr-randr
     librewolf			# FOSS web browser
   ];
+  services.xserver.excludePackages = with pkgs; [
+    xterm
+  ];
   
   ############################
   # Hyprland
