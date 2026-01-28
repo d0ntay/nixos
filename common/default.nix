@@ -48,6 +48,11 @@
   ############################
   programs.zsh.enable = true;
 
+  programs.ssh = {
+    startAgent = true;
+    addKeysToAgent = "yes";
+  };
+
 
   ############################
   # Settings for nix

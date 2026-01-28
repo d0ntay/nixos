@@ -34,10 +34,13 @@
     python314
     go
     gcc
+<<<<<<< HEAD
     pinta         # FOSS paint tool
   ];
   services.xserver.excludePackages = with pkgs; [
     xterm
+=======
+>>>>>>> 5ca1a8c (pushing nixos-l update)
   ];
   
   ############################
