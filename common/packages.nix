@@ -34,6 +34,7 @@
     python314
     go
     gcc
+    pinta         # FOSS paint tool
   ];
   services.xserver.excludePackages = with pkgs; [
     xterm

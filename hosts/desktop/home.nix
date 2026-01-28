@@ -104,6 +104,11 @@ programs.neovim = {
     vim.opt.number = true
     vim.opt.relativenumber = true
     vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
+    vim.opt.tabstop = 2
+    vim.opt.shiftwidth = 2
+    vim.opt.expandtab = true
+
+
 
     --------------------------------------------------
     -- Theme
@@ -196,6 +201,7 @@ programs.neovim = {
     enable = true;
     initExtra= ''
       eval "$(starship init zsh)"
+      export GOPATH=$HOME/code/go
     '';
   };
   ####################################
