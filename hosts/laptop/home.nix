@@ -61,81 +61,136 @@
       positionY = "bottom";
     };
   };
-  ####################################
-  # @neovim
-  ####################################
-  programs.neovim = {
-    enable = true;
-    defaultEditor = true;
-    viAlias = true;
-    vimAlias = true;
-    
-    extraPackages = with pkgs; [
-      ripgrep
-      gopls
-      pyright
-      nixd
-    ];
-    
-    plugins = with pkgs.vimPlugins; [
-      nvim-tree-lua
-      telescope-nvim
-      plenary-nvim
-      nvim-autopairs
-      nvim-web-devicons
-      gruvbox-nvim
-      nvim-cmp
-      cmp-nvim-lsp
-    ];
-    
-    extraLuaConfig = ''
-      -- Leader key
-      vim.g.mapleader = ' '
-      
-      -- Basic settings
-      vim.opt.number = true
-      vim.opt.relativenumber = true
-      
-      -- Theme
-      vim.o.background = "dark"
-      vim.cmd('colorscheme gruvbox')
-      
-      -- Setup plugins
-      require("nvim-tree").setup()
-      require('nvim-autopairs').setup()
-      
-      -- LSP
-      local capabilities = require('cmp_nvim_lsp').default_capabilities()
-      
-      vim.lsp.config('gopls', { capabilities = capabilities })
-      vim.lsp.config('pyright', { capabilities = capabilities })
-      vim.lsp.config('nixd', { capabilities = capabilities })
-      
-      vim.lsp.enable({ 'gopls', 'pyright', 'nixd' })
-      
-      vim.keymap.set('n', 'gd', vim.lsp.buf.definition)
-      vim.keymap.set('n', 'K', vim.lsp.buf.hover)
-      
-      -- Completion
-      local cmp = require('cmp')
-      cmp.setup({
-        mapping = cmp.mapping.preset.insert({
-          ['<CR>'] = cmp.mapping.confirm({ select = true }),
-        }),
-        sources = {
-          { name = 'nvim_lsp' },
-        }
-      })
-      
-      -- Keybinds
-      vim.keymap.set('n', '<leader>e', ':NvimTreeToggle<CR>')
-      
-      local builtin = require('telescope.builtin')
-      vim.keymap.set('n', '<leader>ff', builtin.find_files)
-      vim.keymap.set('n', '<leader>fg', builtin.live_grep)
-    '';
-  };
-  ####################################
+  ########################################
+# Neovim
+####################################
+programs.neovim = {
+  enable = true;
+  defaultEditor = true;
+  viAlias = true;
+  vimAlias = true;
+
+  # Language servers & CLI tools
+  extraPackages = with pkgs; [
+    ripgrep
+    nixd
+    pyright
+    gopls
+  ];
+
+  plugins = with pkgs.vimPlugins; [
+    # LSP
+    nvim-lspconfig
+
+    # Completion
+    nvim-cmp
+    cmp-nvim-lsp
+    cmp-buffer
+    luasnip
+    cmp_luasnip
+
+    # UI / QoL
+    nvim-tree-lua
+    telescope-nvim
+    plenary-nvim
+    nvim-autopairs
+    nvim-web-devicons
+    gruvbox-nvim
+  ];
+
+  extraLuaConfig = ''
+    --------------------------------------------------
+    -- Basic settings
+    --------------------------------------------------
+    vim.g.mapleader = " "
+    vim.opt.number = true
+    vim.opt.relativenumber = true
+    vim.opt.expandtab = true
+    vim.opt.shiftwidth = 2
+    vim.opt.tabstop = 2
+    vim.opt.termguicolors = true
+
+    --------------------------------------------------
+    -- Theme
+    --------------------------------------------------
+    vim.o.background = "dark"
+    vim.cmd("colorscheme gruvbox")
+
+    --------------------------------------------------
+    -- Plugins
+    --------------------------------------------------
+    require("nvim-tree").setup()
+    require("nvim-autopairs").setup()
+
+    --------------------------------------------------
+    -- LSP
+    --------------------------------------------------
+    local lspconfig = require("lspconfig")
+    local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+    lspconfig.nixd.setup({
+      capabilities = capabilities,
+    })
+
+    lspconfig.pyright.setup({
+      capabilities = capabilities,
+    })
+
+    lspconfig.gopls.setup({
+      capabilities = capabilities,
+    })
+
+    --------------------------------------------------
+    -- LSP keymaps
+    --------------------------------------------------
+    vim.keymap.set("n", "gd", vim.lsp.buf.definition)
+    vim.keymap.set("n", "K", vim.lsp.buf.hover)
+    vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename)
+    vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action)
+    vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
+    vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
+
+    --------------------------------------------------
+    -- Completion (nvim-cmp)
+    --------------------------------------------------
+    local cmp = require("cmp")
+    local luasnip = require("luasnip")
+
+    cmp.setup({
+      snippet = {
+        expand = function(args)
+          luasnip.lsp_expand(args.body)
+        end,
+      },
+      mapping = cmp.mapping.preset.insert({
+        ["<CR>"] = cmp.mapping.confirm({ select = true }),
+        ["<C-Space>"] = cmp.mapping.complete(),
+        ["<Tab>"] = cmp.mapping.select_next_item(),
+        ["<S-Tab>"] = cmp.mapping.select_prev_item(),
+      }),
+      sources = {
+        { name = "nvim_lsp" },
+        { name = "luasnip" },
+        { name = "buffer" },
+      },
+    })
+
+    --------------------------------------------------
+    -- Telescope
+    --------------------------------------------------
+    local builtin = require("telescope.builtin")
+    vim.keymap.set("n", "<leader>ff", builtin.find_files)
+    vim.keymap.set("n", "<leader>fg", builtin.live_grep)
+    vim.keymap.set("n", "<leader>fb", builtin.buffers)
+    vim.keymap.set("n", "<leader>fh", builtin.help_tags)
+
+    --------------------------------------------------
+    -- Nvim-tree
+    --------------------------------------------------
+    vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>")
+  '';
+};
+################################
   # @waybar
   ####################################
   programs.waybar = {

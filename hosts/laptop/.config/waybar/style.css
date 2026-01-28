@@ -57,10 +57,13 @@ window#waybar {
 }
 
 #custom-nix {
-    background-image: url("/home/d0ntay/Pictures/NixOS.png");
-    
-    margin: 4px;
-   }
+  background-image: url("/home/d0ntay/Pictures/NixOS.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  margin: 4px;
+  padding: 5px;
+}
 #battery {
   color: #98971a;
   margin: 4px;
@@ -68,6 +71,12 @@ window#waybar {
 }
 
 #custom-power {
+  color: #98971a;
+  margin: 4px;
+  padding: 5px;
+}
+
+#wireplumber {
   color: #98971a;
   margin: 4px;
   padding: 5px;
@@ -81,3 +90,4 @@ menu {
 menuitem {
     border-radius: 15px;
 }
+

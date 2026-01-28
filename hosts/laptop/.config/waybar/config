@@ -3,9 +3,15 @@
   "position": "top",
   "output": "eDP-1",
 
-  "modules-left": ["custom/nix", "hyprland/workspaces", "cpu", "memory", "battery"],
+  "modules-left": ["custom/nix", "hyprland/workspaces", "cpu", "memory", "wireplumber" ],
   "modules-center": [],
-  "modules-right": ["tray", "clock", "custom/power"],
+  "modules-right": ["tray", "clock", "battery", "custom/power"],
+
+  "wireplumber": {
+    "format": "{volume}% {icon}",
+    "format-muted": "",
+    "format-icons": ["", "", ""]
+  },
 
   "custom/power": {
     "format": "⏻ ",

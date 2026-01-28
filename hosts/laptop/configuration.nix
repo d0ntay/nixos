@@ -12,4 +12,9 @@
   services.libinput.enable = true; # touchpad support
 
   system.stateVersion = "25.11"; 
+
+  environment.systemPackages =  [
+    pkgs.brightnessctl
+    pkgs.wireplumber
+  ];
 }
